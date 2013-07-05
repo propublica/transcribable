@@ -1,0 +1,6 @@
+* migration generator for transcriptions table based on parent table attributes
+* controller/view/model generator for transcriptions
+* default verifier
+* default assigner
+* login integration
+* documentcloud?
