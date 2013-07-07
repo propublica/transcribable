@@ -16,14 +16,22 @@ module Transcribable
       self.columns_hash[_attr].instance_variable_get("@transcribable")
     end
 
-    def verification_threshhold(lvl = 2)
-      lvl
+    def set_verification_threshhold(lvl = 2)
+      @@verification_threshhold = lvl
+    end
+
+    # Override this to write your own assigner
+    # By default, it picks a random filing
+    def assign!
+      offset = rand(self.count)
+      filing = self.first(:offset => offset)
     end
   end
 
-  # override this to create your own 
-  # verifier
   module LocalInstanceMethods
+    # Override this to create your own verifier.
+    # By default, all "transcribable" attributes
+    # need to be agreed on by @@verification_threshhold people.
     def verify!
     end
   end
