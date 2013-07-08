@@ -5,6 +5,7 @@ class CreateTranscriptionsTable < ActiveRecord::Migration
         t.<%= type.to_s %> :<%= name %>
       <% end %>
       t.integer :<%= @table.singularize %>_id
+      t.integer :user_id
     end
   end
 

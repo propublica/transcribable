@@ -3,6 +3,7 @@ module Transcribable
   extend ActiveSupport::Concern
 
   included do
+    set_verification_threshhold
   end
 
   module ClassMethods
@@ -33,6 +34,9 @@ module Transcribable
     # By default, all "transcribable" attributes
     # need to be agreed on by @@verification_threshhold people.
     def verify!
+    end
+
+    def verified?
     end
   end
 end
