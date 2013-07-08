@@ -3,19 +3,57 @@ module Transcribable
   require 'transcribable/railtie' if defined?(Rails)
   extend ActiveSupport::Concern
 
+  mattr_accessor :table
+  mattr_accessor :transcribable_attrs
+
   included do
     set_verification_threshhold
   end
 
+  def self.table=(table)
+    @@table = table
+  end
+
+  def self.table
+    @@table
+  end
+
+  # This expects a hash like
+  # {'buyer' => :string, 'amount' => :integer}
+  def self.transcribable_attrs=(attrs)
+    @@transcribable_attrs = attrs
+  end
+
+  def self.transcribable_attrs
+    @@transcribable_attrs
+  end
+
+  # def transcribable_attrs
+  #   transcribable_attrs = {}
+  #   ActiveRecord::Base.connection.tables.reject {|t| t == "schema_migrations" }.each do |table|
+  #     klass = Kernel.const_get(table.classify)
+  #     klass.column_names.each do |col|
+  #       if klass.transcribable?(col)
+  #         @table = table
+  #         transcribable_attrs[col] = Filing.columns_hash[col].type
+  #       end
+  #     end
+  #   end
+  #   transcribable_attrs
+  # end
+
+
   module ClassMethods
     def transcribable(*args)
-      args.each do |k|
-        self.columns_hash[k.to_s].instance_variable_set("@transcribable", true)
+      Transcribable.table = self.to_s.downcase.pluralize
+      Transcribable.transcribable_attrs = args.reduce(Hash.new(0)) do |memo, it|
+        memo[self.columns_hash[it.to_s].name] = self.columns_hash[it.to_s].type
+        memo
       end
     end
 
     def transcribable?(_attr)
-      self.columns_hash[_attr].instance_variable_get("@transcribable")
+      Transcribable.transcribable_attrs.keys.include?(_attr.to_s)
     end
 
     def set_verification_threshhold(lvl = 2)
