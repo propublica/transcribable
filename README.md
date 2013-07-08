@@ -11,7 +11,7 @@
 
 To install, add
 
-    `gem 'transcribable'`
+    gem 'transcribable'
 
 to your Gemfile.
 
@@ -41,7 +41,7 @@ Now, you just need a way to assign out files. In the controller that corresponsd
       def gimme
         @filing = Filing.assign!
         respond_to do |format|
-          format.html { redirect_to(new_filing_transcription_path(filing))}
+          format.html { redirect_to(new_transcription_path(filing))}
         end
       end
     end

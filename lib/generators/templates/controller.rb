@@ -2,7 +2,7 @@ class TranscriptionsController < ActionController::Base
   before_filter :logged_in?
 
   def new
-    <%= @table.singularize %> = <% @table.classify %>.new
+    @<%= @table.singularize %> = <% @table.classify %>.find(params[:<%= @table.singularize %>_id])
     @transcription = Transcription.new
     @transcription.<%= @table.singularize %> = @<%= @table.singularize %>
 
