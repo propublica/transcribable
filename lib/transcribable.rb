@@ -1,5 +1,6 @@
 # adds to Filing
 module Transcribable
+  require 'transcribable/railtie' if defined?(Rails)
   extend ActiveSupport::Concern
 
   included do
@@ -67,14 +68,12 @@ module Transcribable
 
       if chosen.keys.length == attributes.length
         attributes.each do |a|
+          # TODO: Account for numeric attributes
           self[a] = chosen[a]
         end
         self.verified = true
         self.save
       end
-    end
-
-    def verified?
     end
 
     def dc_slug
