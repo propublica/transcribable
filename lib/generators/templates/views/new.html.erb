@@ -1,0 +1,35 @@
+<%% content_for :javascript do %> 
+  <script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<%% end %>
+
+
+<%% if flash[:alert] %>
+  <div class="warn"><%%= flash[:alert] %></div>
+<%% end %>
+<%% if flash[:notice] %>
+  <div class="notice"><%%= flash[:notice] %></div>
+<%% end %>
+
+<h1><%%= title "Tell Us About This Document" %></h1>
+<div id="left-dc-embed">
+  <div id="doc">
+  </div>
+</div>
+  <div id="right-column">
+    <%%= render 'form' %>
+  </div>
+
+<script type="text/javascript" src="http://s3.documentcloud.org/viewer/loader.js"></script> 
+<script>
+  var filingId = <%%= @filing.id %>;
+  var CURRENT_DOCUMENT = DV.load("https://documentcloud.org/documents/<%%= @<%= @table.singularize %>.dc_slug %>.js", {
+    container : '#doc',
+    width     : 660,
+    height    : 900,
+    zoom      : 'auto',
+    showSidebar : false,
+    embedded  : true,
+    showAnnotations : false
+     //afterLoad : setupViewer
+  });
+</script>

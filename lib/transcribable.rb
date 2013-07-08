@@ -21,6 +21,13 @@ module Transcribable
       @@verification_threshhold = lvl
     end
 
+    # Attributes that are potential reasons
+    # to skip a transcription. If enough people
+    # agree to skip, the filing will be marked transcribed.
+    def skip_transcription(*args)
+      @@skippable = args
+    end
+
     # Override this to write your own assigner
     # By default, it picks a random filing
     def assign!
@@ -37,6 +44,10 @@ module Transcribable
     end
 
     def verified?
+    end
+
+    def dc_slug
+      url.split(/\//)[-1]
     end
   end
 end

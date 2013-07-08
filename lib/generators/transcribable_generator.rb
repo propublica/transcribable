@@ -1,6 +1,7 @@
 require "rails/generators"
 require "rails/generators/active_record"
 
+
 class TranscribableGenerator < ActiveRecord::Generators::Base
   desc "Generates transcriptions table"
   # to get around AR Generators requiring a NAME param
@@ -20,10 +21,21 @@ class TranscribableGenerator < ActiveRecord::Generators::Base
       end
     end
     transcribable_attrs
-  end
+  end    
 
-  # Copies the migration template to db/migrate.
   def copy_file
+    # Copies the migration template to db/migrate.
     migration_template 'migration.rb', 'db/migrate/create_transcribable_table.rb'
+    
+    # controller
+    template 'controller.rb', 'app/controllers/transcriptions_controller.rb'
+    
+    # model
+    template 'model.rb', 'app/models/transcription.rb'
+
+    #views
+    template 'views/_form.html.erb', 'app/views/transcriptions/_form.html.erb'
+    template 'views/edit.html.erb', 'app/views/transcriptions/edit.html.erb'
+    template 'views/new.html.erb', 'app/views/transcriptions/new.html.erb'
   end
 end

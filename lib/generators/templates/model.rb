@@ -1,6 +1,6 @@
 class Transcription < ActiveRecord::Base
   belongs_to :user
-  belongs_to :filing
+  belongs_to :<%= @table.singularize %>
 
   after_save :suggest_another_filing
 
