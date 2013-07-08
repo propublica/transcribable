@@ -41,6 +41,37 @@ module Transcribable
     # By default, all "transcribable" attributes
     # need to be agreed on by @@verification_threshhold people.
     def verify!
+      chosen = {}
+      
+      attributes  = self.class.columns_hash.select do |q| 
+        q.instance_variable_get("@transcribable") 
+      end.keys
+
+      aggregate = transcriptions.reduce({}) do |memo, it|
+        attributes.each do |attribute|
+          memo[attribute] = memo[attribute] ? memo[attribute] : {}
+          memo[attribute][it.instance_values['attributes'][attribute].to_s.upcase] = memo[attribute][it.instance_values['attributes'][attribute].to_s.upcase] ? 
+          memo[attribute][it.instance_values['attributes'][attribute].to_s.upcase] + 1 : 1
+        end
+
+        memo
+      end
+
+      aggregate.each do |attribute, answers|
+        answers.each do |answer, answer_ct|
+          if answer_ct > @@verification_threshhold
+            chosen[attribute] = answers.each.max_by {|k,v| v}.first
+          end
+        end
+      end
+
+      if chosen.keys.length == attributes.length
+        attributes.each do |a|
+          self[a] = chosen[a]
+        end
+        self.verified = true
+        self.save
+      end
     end
 
     def verified?
