@@ -1,22 +1,6 @@
 class TranscriptionsController < ActionController::Base
   before_filter :logged_in?
 
-  def index
-    @transcriptions = Transcription.all
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
-  def show
-    @transcription = Transcription.find(params[:id])
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
   def new
     <%= @table.singularize %> = <% @table.classify %>.new
     @transcription = Transcription.new
@@ -66,15 +50,6 @@ class TranscriptionsController < ActionController::Base
       else
         format.html { render :action => "edit" }
       end
-    end
-  end
-
-  def destroy
-    @transcription = Transcription.find(params[:id])
-    @transcription.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(transcriptions_url) }
     end
   end
 end

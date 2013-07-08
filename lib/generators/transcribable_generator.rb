@@ -23,7 +23,7 @@ class TranscribableGenerator < ActiveRecord::Generators::Base
     transcribable_attrs
   end    
 
-  def copy_file
+  def copy_files
     # Copies the migration template to db/migrate.
     migration_template 'migration.rb', 'db/migrate/create_transcribable_table.rb'
     
@@ -37,5 +37,7 @@ class TranscribableGenerator < ActiveRecord::Generators::Base
     template 'views/_form.html.erb', 'app/views/transcriptions/_form.html.erb'
     template 'views/edit.html.erb', 'app/views/transcriptions/edit.html.erb'
     template 'views/new.html.erb', 'app/views/transcriptions/new.html.erb'
+  
+    route "resources :transcriptions, :only => [:new, :create, :update]"
   end
 end
