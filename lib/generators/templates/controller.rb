@@ -1,4 +1,6 @@
 class TranscriptionsController < ActionController::Base
+  layout "simple_frame"
+
   def new
     @<%= @table.singularize %> = <%= @table.classify %>.find(params[:<%= @table.singularize %>_id])
     @transcription = Transcription.new

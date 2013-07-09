@@ -33,9 +33,13 @@ class TranscribableGenerator < ActiveRecord::Generators::Base
     template 'model.rb', 'app/models/transcription.rb'
 
     # views
+    template 'views/layouts/simple_frame.html.erb', 'app/views/layouts/simple_frame.html.erb'
     template 'views/_form.html.erb', 'app/views/transcriptions/_form.html.erb'
     template 'views/edit.html.erb', 'app/views/transcriptions/edit.html.erb'
     template 'views/new.html.erb', 'app/views/transcriptions/new.html.erb'
+
+    # assets
+    template 'assets/stylesheets/simple_frame.css', 'app/assets/stylesheets/simple_frame.css'
   
     # config
     template 'config/documentcloud.yml', 'config/documentcloud.yml'

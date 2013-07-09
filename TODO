@@ -1,11 +1,5 @@
-* migration generator for transcriptions table based on parent table attributes
-* controller/views/model generator for transcriptions
-* asset generator
-* routes?
+* CSS/Layout/JS generator
 * default verifier
-* default assigner
-* documentcloud harvester
-
-* user/login integration?
-* "skip" buttons
+* flash messages
+* "skip_transcription" attributes
 * tests

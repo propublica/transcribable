@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <%%= yield :css %>
+    <!-- switchy -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1.6">
+    <!-- /switchy -->
+    <script src="//s3.amazonaws.com/s3.documentcloud.org/viewer/loader.js"></script>
+    <%%= yield :javascripts %>
+    <%%= yield :header %>
+    <title><%%= yield :title %></title>
+  </head>
+  <body class="app" id="simple_wrapper">
+    <div id="banner">
+      <div class="wrapper">
+        <div id="banner-identity">
+          <p id="banner-logo"><a href="http://www.propublica.org/" class="pngfix">Header</a></p>
+          <p id="banner-tagline">Tagline</p>
+          <p id="app-tagline">My Transcribable App</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="banner-nav">
+      <div class="wrapper">
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <div id="content">
+      <div class="wrapper">
+        <div id="modal-screen-coverer"></div>
+        <div id="simple_frame">
+          <%%= yield %>
+        </div>
+      </div>
+    </div>
+
+    <div id="fb-root"></div>
+    <div id="footer">
+      <div class="wrapper">
+        <div id="footer-logo">
+          <p id="footer-logo-image">Organization</p>
+          <p>© Copyright<br />
+          Organization, Inc.</p>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
+  </body>
+</html>
