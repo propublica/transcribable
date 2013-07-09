@@ -22,7 +22,7 @@ class TranscribableGenerator < ActiveRecord::Generators::Base
 
   def copy_files
     # Copies the migration template to db/migrate.
-    migration_template 'migration.rb', 'db/migrate/create_transcribable_table.rb'
+    migration_template 'migration.rb', 'db/migrate/create_transcriptions_table.rb'
     
     # controller
     template 'controller.rb', 'app/controllers/transcriptions_controller.rb'

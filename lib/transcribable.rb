@@ -1,6 +1,6 @@
 # adds to Filing
 module Transcribable
-  require 'transcribable/railtie' if defined?(Rails)
+  require 'transcribable/railtie'
   extend ActiveSupport::Concern
 
   mattr_accessor :table
