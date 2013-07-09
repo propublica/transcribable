@@ -5,13 +5,20 @@ require "transcribable"
 
 class TranscribableGenerator < ActiveRecord::Generators::Base
   include Transcribable
-  
+
   desc "Generates transcriptions table"
   # to get around AR Generators requiring a NAME param
   argument :name, type: :string, default: 'random_name'
 
   source_root File.expand_path('../templates', __FILE__)
 
+  def table
+    @table = Transcribable.table
+  end
+
+  def transcribable_attrs
+    Transcribable.transcribable_attrs
+  end
 
   def copy_files
     # Copies the migration template to db/migrate.
