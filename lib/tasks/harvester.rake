@@ -9,10 +9,12 @@ namespace :transcribable do
     dc_project['document_ids'].each do |doc_id|
       begin
         dc_doc = JSON.parse(RestClient.get("https://www.documentcloud.org/api/documents/#{doc_id}.json"))['document']
+      # this will skip non-public documents
       rescue RestClient::ResourceNotFound
         next
       end
       obj = klass.find_or_initialize_by_url("https://www.documentcloud.org/documents/#{dc_doc['id']}")
+      # don't plow over verified docs if rerunning the script
       obj.verified = false if obj.new_record?
       obj.save
       puts "== added #{obj.url}"

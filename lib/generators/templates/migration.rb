@@ -5,7 +5,7 @@ class CreateTranscriptionsTable < ActiveRecord::Migration
         t.<%= type.to_s %> :<%= name %>
       <% end %>
       t.integer :<%= @table.singularize %>_id
-      t.integer :user_id
+      t.string :user_id # by default, this will be a UUID stored by cookie
     end
   end
 

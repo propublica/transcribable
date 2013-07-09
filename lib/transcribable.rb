@@ -1,4 +1,6 @@
 # adds to Filing
+require 'uuid'
+
 module Transcribable
   require 'transcribable/railtie'
   extend ActiveSupport::Concern
@@ -11,6 +13,8 @@ module Transcribable
   end
 
   def self.table
+    # transcribable_attrs() "discovers" the columns
+    # and table. run it if we don't have a table yet.
     transcribable_attrs if @@table.nil?
     @@table
   end
@@ -38,6 +42,7 @@ module Transcribable
       args.each do |k|
         self.columns_hash[k.to_s].instance_variable_set("@transcribable", true)
       end
+      include Transcribable::LocalInstanceMethods
     end
 
     def transcribable?(_attr)

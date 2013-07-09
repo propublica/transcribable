@@ -15,10 +15,11 @@ To install, add
 
 to your Gemfile.
 
-Transcribable will add a `transcribable` method your models. In your "master" table, (of items you'd like verified) specify which attributes you would like users to be able to transcribe, like so:
+Transcribable will add a `transcribable` method your models. In your "master" table, (of items you'd like verified) specify which attributes you would like users to be able to transcribe, and define the one-to-many relationship like so:
 
     class Filing < ActiveRecord::Base
       transcribable :buyer, :amount
+      has_many :transcriptions
     end
 
 Make sure your master table also has `url` (string) and `verified` (boolean) columns.
@@ -41,12 +42,12 @@ Now, you just need a way to assign out files. In the controller that corresponsd
       def gimme
         @filing = Filing.assign!
         respond_to do |format|
-          format.html { redirect_to(new_transcription_path(filing))}
+          format.html { redirect_to(new_transcription_path(@filing))}
         end
       end
     end
 
-You can overwrite the `assign!` method by writing a new one in your master table's model.
+You can overwrite the `assign!` method in your master table's model.
 
 Now, to get the `gimme` action working, write a route for it:
 
@@ -60,4 +61,4 @@ Start up your app and navigate to http://localhost:3000/filings/gimme. You shoul
 
 **Next steps:**
 
-This gives you a bare bones approximation of how a project like [Free the Files](https://projects.propublica.org/free-the-files/) works. Ideally, you should implement a login system so users only get to see filings once, and weight assigned filings such that the ones that are about to be verified are given out first, to push them over the top.
+This gives you a bare bones approximation of how a project like [Free the Files](https://projects.propublica.org/free-the-files/) works. Ideally, you should implement a login system so users only get to see filings once (and prevent abuse), and weight assigned filings such that the ones that are about to be verified are given out first, to push them over the top. Since these are implementation-specific decisions, we have chosen not to add them to Transcribable.

@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.0.0"
   s.add_dependency "rest-client"
+  s.add_dependency "uuid"
 
   s.add_development_dependency "sqlite3"
 end

@@ -1,4 +1,4 @@
-<%%= form_for([<%= @table.singularize %>, @transcription]) do |f| %>
+<%%= form_for(@transcription) do |f| %>
   <%% if @transcription.errors.any? %>
     <div id="error_explanation">
       <h2><%%= pluralize(@transcription.errors.count, "error") %> prohibited this transcription from being saved:</h2>
