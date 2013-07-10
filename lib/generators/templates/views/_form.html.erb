@@ -12,17 +12,19 @@
   <%% end %>
 
   <% transcribable_attrs.each do |col, type| %>
-    <% if [:string, :integer].include?(type) %>
-      <h2><%= col.titleize %></h2>
-      <%%= label_tag :<%= col %>, "Your attribute description here" %><br />
-      <%%= f.text_field :<%= col %>, {:class => "wwwinput", :tabindex => 3}  %>
-    <% end %>
-    <% if [:text].include?(type) %>
-      <div class="field" id="notes" style="display: none;clear:both;margin-top:20px">
-        <%%= f.label :<%= col %>, "Your attribute description here" %><br />
-        <%%= f.text_area :<%= col %>, :size => "26x8", :class => "wwwinput", :style => "padding:5px;width:98%", :tabindex => 6  %>
-      </div>
-    <% end %>
+    <div class="do_something">
+      <% if [:string, :integer].include?(type) %>
+        <h2><%= col.titleize %></h2>
+        <%%= label_tag :<%= col %>, "Your attribute description here" %><br />
+        <%%= f.text_field :<%= col %>, {:class => "wwwinput", :tabindex => 3}  %>
+      <% end %>
+      <% if [:text].include?(type) %>
+        <div class="field" id="notes" style="display: none;clear:both;margin-top:20px">
+          <%%= f.label :<%= col %>, "Your attribute description here" %><br />
+          <%%= f.text_area :<%= col %>, :size => "26x8", :class => "wwwinput", :style => "padding:5px;width:98%", :tabindex => 6  %>
+        </div>
+      <% end %>
+    </div>
   <% end %>
   <a href="#" class="fancy_btn full_width_btn green-btn" id="transcriptionsubmit">Submit</a>
 <%% end %>

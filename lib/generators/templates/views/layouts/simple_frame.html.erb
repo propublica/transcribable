@@ -3,6 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width">
+    <%%= stylesheet_link_tag :simple_frame %>
     <%%= yield :css %>
     <!-- switchy -->
     <meta name="viewport" content="width=device-width, maximum-scale=1.6">
@@ -16,8 +17,6 @@
     <div id="banner">
       <div class="wrapper">
         <div id="banner-identity">
-          <p id="banner-logo"><a href="http://www.yoursite.org/" class="pngfix">Header</a></p>
-          <p id="banner-tagline">Tagline</p>
           <p id="app-tagline">My Transcribable App</p>
         </div>
       </div>
@@ -42,9 +41,7 @@
     <div id="footer">
       <div class="wrapper">
         <div id="footer-logo">
-          <p id="footer-logo-image">Organization</p>
-          <p>© Copyright<br />
-          Organization, Inc.</p>
+          <p id="footer-logo-image">My Transcribable App</p>
         </div>
         <div style="clear:both;"></div>
       </div>

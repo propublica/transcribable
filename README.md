@@ -61,6 +61,4 @@ Now, to get the `gimme` action working, write a route for it:
 
 Start up your app and navigate to http://localhost:3000/filings/gimme. You should be given a random filing from your DocumentCloud harvest.
 
-**Next steps:**
-
-This gives you a bare bones approximation of how a project like [Free the Files](https://projects.propublica.org/free-the-files/) works. Ideally, you should implement a login system so users only get to see filings once (and prevent abuse), and weight assigned filings such that the ones that are about to be verified are given out first, to push them over the top. Since these are implementation-specific decisions, we have chosen not to add them to Transcribable.
+**Note**: By default, Transcribable keeps users from transcribing the same document more than once by assigning a UUID-based cookie. Obviously this isn't ideal for rigorous journalistic applications. You'll want to implement a real login system for complicated projects.
