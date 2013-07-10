@@ -52,6 +52,6 @@ class TranscribableGenerator < ActiveRecord::Generators::Base
     template 'config/documentcloud.yml', 'config/documentcloud.yml'
 
     # routes
-    route "resources :transcriptions, :only => [:new, :create, :update]"
+    route "resources :transcriptions, :only => [:new, :create]"
   end
 end

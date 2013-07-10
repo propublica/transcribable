@@ -64,6 +64,10 @@ module Transcribable
       @@verification_threshhold = lvl
     end
 
+    def verification_threshhold
+      @@verification_threshhold
+    end
+
     # Attributes that are potential reasons
     # to skip a transcription. If enough people
     # agree to skip, the filing will be marked transcribed.
@@ -100,7 +104,7 @@ module Transcribable
 
       aggregate.each do |attribute, answers|
         answers.each do |answer, answer_ct|
-          if answer_ct > @@verification_threshhold
+          if answer_ct > self.class.verification_threshhold
             chosen[attribute] = answers.each.max_by {|k,v| v}.first
           end
         end

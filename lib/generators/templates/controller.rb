@@ -17,38 +17,18 @@ class TranscriptionsController < ActionController::Base
     end   
   end
 
-  def edit
-    @transcription = Transcription.find(params[:id])
-  end
-
   def create
     @<%= @table.singularize %> = <%= @table.classify %>.find(params[:<%= @table.singularize %>_id])
-    @transcription = Transcription.new(params[:transcription])
+    @transcription = Transcription.new(transcription_params)
     @transcription.<%= @table.singularize %> = @<%= @table.singularize %>
-    @transcription.user = current_user
+    @transcription.user_id = current_user
 
     respond_to do |format|
       if @transcription.save
         @<%= @table.singularize %>.verify!
-        format.html { redirect_to @<%= @table.singularize %> }
-        format.json { render :json => @transcription }
+        format.html { redirect_to(gimme_filings_path, :notice => "Thank you for transcribing. Here's another filing.") }
       else
-        format.html { render :action => "new" }
-      end
-    end    
-  end
-
-  def update
-    @transcription = Transcription.find(params[:id])
-    new_transcription = params[:transcription]
-
-    respond_to do |format|
-      if @transcription.update_attributes(new_transcription)
-        @transcription.<%= @table.singularize %>.verify!
-        format.html { redirect_to @transcription.<%= @table.singularize %> }
-        format.json { render :json => { :transcription => @transcription.attributes }}
-      else
-        format.html { render :action => "edit" }
+        format.html { render :action => "new", :alert => "Something went wrong. Please try again." }
       end
     end
   end
@@ -61,4 +41,8 @@ class TranscriptionsController < ActionController::Base
   def current_user
     cookies[:user_id] ? cookies[:user_id] : UUID.new.generate(:compact)
   end
+
+  def transcription_params
+    params.require(:transcription).permit(<%= transcribable_attrs.keys.map{|q| ":#{q}" }.join(",") %>)
+  end  
 end

@@ -19,12 +19,14 @@
         <%%= f.text_field :<%= col %>, {:class => "wwwinput", :tabindex => 3}  %>
       <% end %>
       <% if [:text].include?(type) %>
-        <div class="field" id="notes" style="display: none;clear:both;margin-top:20px">
+        <h2><%= col.titleize %></h2>
+        <div class="field" id="notes">
           <%%= f.label :<%= col %>, "Your attribute description here" %><br />
           <%%= f.text_area :<%= col %>, :size => "26x8", :class => "wwwinput", :style => "padding:5px;width:98%", :tabindex => 6  %>
         </div>
       <% end %>
     </div>
   <% end %>
-  <a href="#" class="fancy_btn full_width_btn green-btn" id="transcriptionsubmit">Submit</a>
+  <%%= hidden_field_tag "filing_id", params[:filing_id].to_i %>
+  <%%= submit_tag "Submit", :class => "fancy_btn full_width_btn green-btn", :id => "transcriptionsubmit"  %>
 <%% end %>
