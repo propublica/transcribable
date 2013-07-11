@@ -34,6 +34,7 @@ module Transcribable
         end
       end
     end
+    
     @@transcribable_attrs
   end
 
@@ -68,7 +69,9 @@ module Transcribable
       @@skip_verification
     end
 
-    def set_verification_threshhold(lvl = 2)
+    # The number over which people must agree
+    # on every attribute to verify a transcription
+    def set_verification_threshhold(lvl = 1)
       @@verification_threshhold = lvl
     end
 

@@ -24,6 +24,12 @@ Transcribable will add a `transcribable` method your models. In your "master" ta
 
 Make sure your master table also has `url` (string) and `verified` (boolean) columns.
 
+If you'd like users to be able to transcribe a field, but don't want that field to be verified (for example, interesting notes), add, for example
+
+  skip_verification :notes, :related_urls
+
+to your master model.
+
 Run the generator, which will create everything you need for transcriptions: a migration based on your master table's transcribable attributes, a transcription model, controller, views and routes.
 
     rails g transcribable
@@ -31,6 +37,8 @@ Run the generator, which will create everything you need for transcriptions: a m
 Then run:
 
     rake db:migrate
+
+If you ever need to add more transcribable columns, just add them to your master table, add them to the `transcribable` call in your master model, and then rerun `rails g transcribable`. That will generate a new migration for adding the new columns to the transcriptions table.
 
 To populate your master table with documents for users to verify, you can harvest them from a DocumentCloud project. Fill out the `documentcloud.yml` file that was generated for you in your config directory, and run:
 
