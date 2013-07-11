@@ -26,7 +26,7 @@ Make sure your master table also has `url` (string) and `verified` (boolean) col
 
 If you'd like users to be able to transcribe a field, but don't want that field to be verified (for example, interesting notes), add, for example
 
-  skip_verification :notes, :related_urls
+    skip_verification :notes, :related_url
 
 to your master model.
 
