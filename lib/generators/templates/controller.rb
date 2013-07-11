@@ -39,7 +39,13 @@ class TranscriptionsController < ActionController::Base
   # For rigorous purposes, please consider implementing a
   # real login system.
   def current_user
-    cookies[:user_id] ? cookies[:user_id] : UUID.new.generate(:compact)
+    cookie_name = "#{Rails.application.engine_name}_transcriable_user_id".to_sym
+    return cookies[cookie_name] if cookies[cookie_name]
+    cookies[cookie_name] = {
+      :value   => UUID.new.generate(:compact),
+      :expires => 5.years.from_now
+    }
+    cookies[cookie_name]
   end
 
   def transcription_params

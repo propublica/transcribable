@@ -60,6 +60,14 @@ module Transcribable
       self.columns_hash[_attr].instance_variable_get("@transcribable")
     end
 
+    def skip_verification(*args)
+      @@skip_verification = args
+    end
+
+    def skipped_attrs
+      @@skip_verification
+    end
+
     def set_verification_threshhold(lvl = 2)
       @@verification_threshhold = lvl
     end
@@ -90,7 +98,11 @@ module Transcribable
     def verify!
       chosen = {}
       
-      attributes  = Transcribable.transcribable_attrs
+      attributes  = Transcribable.transcribable_attrs.reject do |k, v|
+        self.class.skipped_attrs.include?(k.to_s)
+      end
+
+      Rails.logger.info("== Verifying #{attributes.keys.join(", ")}")
 
       aggregate = transcriptions.reduce({}) do |memo, it|
         attributes.each do |attribute|
@@ -117,6 +129,9 @@ module Transcribable
         end
         self.verified = true
         self.save
+        Rails.logger.info("== Verified #{self.url}")
+      else
+        Rails.logger.info("== Not verified: #{self.url}")
       end
     end
 

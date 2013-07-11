@@ -219,7 +219,7 @@ body {
 }
 
 .full_width_btn{
-  width: 95%;
+  width: 100%;
   padding-top: 8px;
   padding-bottom: 8px;
   display: block;
@@ -256,5 +256,29 @@ body {
   border-color: #51A351 #51A351 #387038;
   filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff51a351', GradientType=0);
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+
+
+/* Flash notices/alert */
+.notice {
+  color: #000;
+  background: #CCFFCC;
+  border-radius:3px;
+  margin-top:10px;
+  box-shadow: 0 0 3px #cecece;
+}
+.error, .warn, .notice, #simple_frame #error_explanation {
+  padding: 10px;
+  margin-bottom: 5px;
+  font-weight:bold;
+  font-family:Helvetica,arial,sans-serif;
+}
+.error{
+  color: #660000;
+  background: #FFEEEE;
+}
+.warn{
+  color:#000;
+  background:#FBFFCE;
 }
 
