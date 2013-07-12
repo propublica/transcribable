@@ -53,5 +53,7 @@ class TranscribableGenerator < ActiveRecord::Generators::Base
 
     # routes
     route "resources :transcriptions, :only => [:new, :create]"
+    route "resources :#{@table.to_sym}, :only => [:index, :show]"
+    route "root :to => \"#{@table}#index\""
   end
 end

@@ -1,5 +1,0 @@
-* default verifier
-* tests
-* address deprecation warnings
-* redirect loops when scraping bottom of non-transcribed barrel
-* gimme_path is hardcoded to a "filings" master table

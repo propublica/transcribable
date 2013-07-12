@@ -2,19 +2,15 @@ class TranscriptionsController < ActionController::Base
   layout "simple_frame"
 
   def new
-    @<%= @table.singularize %> = <%= @table.classify %>.find(params[:<%= @table.singularize %>_id])
+    @<%= @table.singularize %> = <%= @table.classify %>.assign!(current_user)
+    # if we're able to assign a filing
+    # that the user hasn't done and hasn't been verified
+    if @<%= @table.singularize %>.nil?
+      redirect_to(root_path, :alert => "You've transcribed all of the filings. Thank you.")
+      return
+    end
     @transcription = Transcription.new
     @transcription.<%= @table.singularize %> = @<%= @table.singularize %>
-
-     respond_to do |format|
-      if @transcription.filing.verified?
-        format.html { redirect_to gimme_filings_path }
-      elsif @transcription.<%= @table.singularize %>.transcriptions.map(&:user_id).include?(current_user)
-        format.html { redirect_to( gimme_filings_path) }
-      else
-        format.html
-      end
-    end   
   end
 
   def create
@@ -23,13 +19,11 @@ class TranscriptionsController < ActionController::Base
     @transcription.<%= @table.singularize %> = @<%= @table.singularize %>
     @transcription.user_id = current_user
 
-    respond_to do |format|
-      if @transcription.save
-        @<%= @table.singularize %>.verify!
-        format.html { redirect_to(gimme_filings_path, :notice => "Thank you for transcribing. Here's another filing.") }
-      else
-        format.html { render :action => "new", :alert => "Something went wrong. Please try again." }
-      end
+    if @transcription.save
+      @<%= @table.singularize %>.verify!
+      redirect_to(new_transcription_path, :notice => "Thank you for transcribing. Here's another filing.")
+    else
+      render :action => "new", :alert => "Something went wrong. Please try again."
     end
   end
 

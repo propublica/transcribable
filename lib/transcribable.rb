@@ -34,7 +34,7 @@ module Transcribable
         end
       end
     end
-    
+
     @@transcribable_attrs
   end
 
@@ -87,10 +87,21 @@ module Transcribable
     end
 
     # Override this to write your own assigner
-    # By default, it picks a random filing
-    def assign!
-      offset = rand(self.count)
-      filing = self.first(:offset => offset)
+    # By default, it picks a random filing that 
+    # a user has not transcribed. If there's nothing left
+    # for that user to do, it returns nil. This will get slower
+    # the more transcriptions you have, so it'll be a good idea
+    # to index the filing_id (or whatever master table foreign key)
+    # column in your transcriptions table.
+    def assign!(user_id)
+      user_transcribed_filings = Transcription.where(:user_id => user_id).map {|q| q["#{self.table_name.downcase.singularize}_id".to_sym] }.uniq
+      p user_transcribed_filings
+      filings = self.where(:verified => [nil, false])
+      if user_transcribed_filings.length > 0
+        filings = filings.where("id NOT IN (?)", user_transcribed_filings)
+      end
+      pick    = rand(filings.length - 1)
+      filings.length > 0 ? filings[pick] : nil
     end
   end
 
@@ -101,11 +112,11 @@ module Transcribable
     def verify!
       chosen = {}
       
-      attributes  = Transcribable.transcribable_attrs.reject do |k, v|
-        self.class.skipped_attrs.include?(k.to_s)
+      attributes  = Transcribable.transcribable_attrs.keys.reject do |k|
+        self.class.skipped_attrs.include?(k.to_sym)
       end
 
-      Rails.logger.info("== Verifying #{attributes.keys.join(", ")}")
+      Rails.logger.info("== Verifying #{attributes.join(", ")}")
 
       aggregate = transcriptions.reduce({}) do |memo, it|
         attributes.each do |attribute|

@@ -44,29 +44,8 @@ To populate your master table with documents for users to verify, you can harves
 
     rake transcribable:harvest
 
-Now, you just need a way to assign out files. In the controller that corresponsds to your master table, we'll write a "gimme" method that randomly assigns files to transcribe. You may want to modify this later on to weight assignments by certain factors, but for now we'll do it randomly:
+To start transcribing documents, boot up your app and navigate to http://localhost:3000/transcriptions/new. You should be given a random filing from your DocumentCloud harvest.
 
-    class FilingsController < ActionController::Base
-      def gimme
-        @filing = Filing.assign!
-        respond_to do |format|
-          format.html { 
-            redirect_to(new_transcription_path({:filing_id => @filing.id }))
-          }
-        end
-      end
-    end
-
-You can overwrite the `assign!` method in your master table's model.
-
-Now, to get the `gimme` action working, write a route for it:
-
-    resources :filings, :only => [:index, :show] do
-      collection do
-        get "gimme"
-      end
-    end
-
-Start up your app and navigate to http://localhost:3000/filings/gimme. You should be given a random filing from your DocumentCloud harvest.
+You can overwrite the `assign!` method -- the algorithm that chooses a filing for users to transcribe -- in your master table's model.
 
 **Note**: By default, Transcribable keeps users from transcribing the same document more than once by assigning a UUID-based cookie. Obviously this isn't ideal for rigorous journalistic applications. You'll want to implement a real login system for complicated projects.
