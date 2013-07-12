@@ -95,7 +95,6 @@ module Transcribable
     # column in your transcriptions table.
     def assign!(user_id)
       user_transcribed_filings = Transcription.where(:user_id => user_id).map {|q| q["#{self.table_name.downcase.singularize}_id".to_sym] }.uniq
-      p user_transcribed_filings
       filings = self.where(:verified => [nil, false])
       if user_transcribed_filings.length > 0
         filings = filings.where("id NOT IN (?)", user_transcribed_filings)
