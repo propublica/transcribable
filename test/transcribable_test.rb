@@ -52,7 +52,6 @@ class TranscribableVerifierTest < ActiveSupport::TestCase
     @user1 = "40765bb0cfa90130c5fb442c03361f6e"
     @user2 = "5aa499f0cfb30130c5fc442c03361f6e"
 
-
     @doc = Filing.create({:id => 1, :url => "https://www.documentcloud.org/documents/326749-abc-chicago"})
 
     @transcription1 = Transcription.create({:filing_id => 1, :user_id => @user1, :buyer => "Restore Our Future", :amount => 123.45})

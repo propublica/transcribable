@@ -8,12 +8,15 @@
              Drop in crowdsourcing for your Rails app.
                                 -*-
 
+During the 2012 election, ProPublica created an news application called [Free the Files](https://projects.propublica.org/free-the-files/) that crowdsourced political TV spending by asking users to transcribe certain data points from FCC filings. This Rails plugin extracts the "transcribable" bits from Free the Files so anyone can crowdsource data out of documents, as long as they're stored in [DocumentCloud](https://www.documentcloud.org/). This gem will handle building out the models, controllers and views you need, and it will also assign and verify the data you get back.
 
 To install, add
 
     gem 'transcribable'
 
-to your Gemfile.
+to your Gemfile. Then run:
+
+    bundle install
 
 Transcribable will add a `transcribable` method your models. In your "master" table, (of items you'd like verified) specify which attributes you would like users to be able to transcribe, and define the one-to-many relationship like so:
 
