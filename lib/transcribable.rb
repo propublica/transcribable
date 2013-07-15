@@ -137,7 +137,6 @@ module Transcribable
 
       if chosen.keys.length == attributes.length
         attributes.each do |a|
-          # TODO: Account for numeric attributes
           self[a] = chosen[a]
         end
         self.verified = true
