@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Transcribable::VERSION
   s.authors     = ["Al Shaw"]
   s.email       = ["almshaw@gmail.com"]
-  s.homepage    = "http://propublica.org"
+  s.homepage    = "https://github.com/propublica/transcribable"
   s.summary     = "Drop in crowdsourcing for your Rails app."
   s.description = "Drop in crowdsourcing for your Rails app."
 
