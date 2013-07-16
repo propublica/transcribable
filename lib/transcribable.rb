@@ -42,6 +42,8 @@ module Transcribable
   # and need transcriptions to catch up.
   # Returns a hash like transcribable_attrs
   def self.new_columns
+    return nil unless defined?(Transcription)
+
     cols = Transcribable.transcribable_attrs.keys - Transcription.columns_hash.keys
     cols.reduce(Hash.new(0)) do |memo, it|
       memo[it] = Kernel.const_get(@@table.classify).columns_hash[it].type
