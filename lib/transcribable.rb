@@ -30,7 +30,7 @@ module Transcribable
       klass.column_names.each do |col|
         if klass.transcribable?(col)
           @@table = table
-          @@transcribable_attrs[col] = Filing.columns_hash[col].type
+          @@transcribable_attrs[col] = @@table.classify.columns_hash[col].type
         end
       end
     end
