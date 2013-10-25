@@ -26,7 +26,7 @@ class TranscribableGenerator < ActiveRecord::Generators::Base
 
   def copy_files
     # Copies the migration template to db/migrate.
-    if Transcribable.new_columns.length > 0
+    if Transcribable.new_columns && Transcribable.new_columns.length > 0
       @migration_name = "add_#{Transcribable.new_columns.keys.join("_and_")}_to_transcriptions"
       migration_template 'migration_add_columns.rb', "db/migrate/#{@migration_name}.rb"
     elsif !ActiveRecord::Base.connection.tables.include?("transcriptions")
@@ -42,7 +42,6 @@ class TranscribableGenerator < ActiveRecord::Generators::Base
     # views
     template 'views/layouts/simple_frame.html.erb', 'app/views/layouts/simple_frame.html.erb'
     template 'views/_form.html.erb', 'app/views/transcriptions/_form.html.erb'
-    template 'views/edit.html.erb', 'app/views/transcriptions/edit.html.erb'
     template 'views/new.html.erb', 'app/views/transcriptions/new.html.erb'
 
     # assets
