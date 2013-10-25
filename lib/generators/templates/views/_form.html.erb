@@ -1,0 +1,32 @@
+<%%= form_for(@transcription) do |f| %>
+  <%% if @transcription.errors.any? %>
+    <div id="error_explanation">
+      <h2><%%= pluralize(@transcription.errors.count, "error") %> prohibited this transcription from being saved:</h2>
+
+      <ul>
+      <%% @transcription.errors.full_messages.each do |msg| %>
+        <li><%%= msg %></li>
+      <%% end %>
+      </ul>
+    </div>
+  <%% end %>
+
+  <% transcribable_attrs.each do |col, type| %>
+    <div class="do_something">
+      <% if [:string, :integer, :float, :decimal].include?(type) %>
+        <h2><%= col.titleize %></h2>
+        <%%= label_tag :<%= col %>, "Your attribute description here" %><br />
+        <%%= f.text_field :<%= col %>, {:class => "wwwinput", :tabindex => 3}  %>
+      <% end %>
+      <% if [:text].include?(type) %>
+        <h2><%= col.titleize %></h2>
+        <div class="field" id="notes">
+          <%%= f.label :<%= col %>, "Your attribute description here" %><br />
+          <%%= f.text_area :<%= col %>, :size => "26x8", :class => "wwwinput", :style => "padding:5px;width:98%", :tabindex => 6  %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%%= hidden_field_tag "filing_id", @<%= @table.singularize %>.id %>
+  <%%= submit_tag "Submit", :class => "fancy_btn full_width_btn green-btn", :id => "transcriptionsubmit"  %>
+<%% end %>
