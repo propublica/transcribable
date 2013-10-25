@@ -68,6 +68,7 @@ module Transcribable
     end
 
     def skipped_attrs
+      return [] unless defined? @@skip_verification
       @@skip_verification
     end
 
