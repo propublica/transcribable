@@ -13,7 +13,10 @@ namespace :transcribable do
       rescue RestClient::ResourceNotFound
         next
       end
-      obj = klass.find_or_initialize_by_url("https://www.documentcloud.org/documents/#{dc_doc['id']}")
+
+      # uses updated method with model field & value as the argument
+      obj = klass.find_or_initialize_by(url: "https://www.documentcloud.org/documents/#{dc_doc['id']}")
+
       # don't plow over verified docs if rerunning the script
       obj.verified = false if obj.new_record?
       obj.save
