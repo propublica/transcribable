@@ -13,7 +13,7 @@
 
   <% transcribable_attrs.each do |col, type| %>
     <div class="do_something">
-      <% if [:string, :integer].include?(type) %>
+      <% if [:string, :integer, :float, :decimal].include?(type) %>
         <h2><%= col.titleize %></h2>
         <%%= label_tag :<%= col %>, "Your attribute description here" %><br />
         <%%= f.text_field :<%= col %>, {:class => "wwwinput", :tabindex => 3}  %>
