@@ -27,6 +27,6 @@
       <% end %>
     </div>
   <% end %>
-  <%%= hidden_field_tag "filing_id", @<%= @table.singularize %>.id %>
+  <%%= hidden_field_tag "<%= @table.singularize %>_id", @<%= @table.singularize %>.id %>
   <%%= submit_tag "Submit", :class => "fancy_btn full_width_btn green-btn", :id => "transcriptionsubmit"  %>
 <%% end %>
